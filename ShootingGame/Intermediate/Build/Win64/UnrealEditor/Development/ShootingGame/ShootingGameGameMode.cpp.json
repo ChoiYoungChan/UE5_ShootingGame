@@ -1,0 +1,27 @@
+{
+    "Version": "1.1",
+    "Data": {
+        "Source": "d:\\documents\\project\\project athena\\ue4_shootinggame\\shootinggame\\source\\shootinggame\\shootinggamegamemode.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\documents\\project\\project athena\\ue4_shootinggame\\shootinggame\\intermediate\\build\\win64\\shootinggameeditor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
+        "Includes": [
+            "d:\\documents\\project\\project athena\\ue4_shootinggame\\shootinggame\\intermediate\\build\\win64\\unrealeditor\\development\\shootinggame\\definitions.shootinggame.h",
+            "d:\\documents\\project\\project athena\\ue4_shootinggame\\shootinggame\\source\\shootinggame\\shootinggamegamemode.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\gameframework\\gamemodebase.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\engine\\serverstatreplicator.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\serverstatreplicator.generated.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\gamemodebase.generated.h",
+            "d:\\documents\\project\\project athena\\ue4_shootinggame\\shootinggame\\intermediate\\build\\win64\\unrealeditor\\inc\\shootinggame\\shootinggamegamemode.generated.h",
+            "d:\\documents\\project\\project athena\\ue4_shootinggame\\shootinggame\\source\\shootinggame\\shootinggamecharacter.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\gameframework\\character.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\gameframework\\charactermovementreplication.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\charactermovementreplication.generated.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\gameframework\\rootmotionsource.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\rootmotionsource.generated.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\character.generated.h",
+            "d:\\documents\\project\\project athena\\ue4_shootinggame\\shootinggame\\intermediate\\build\\win64\\unrealeditor\\inc\\shootinggame\\shootinggamecharacter.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
