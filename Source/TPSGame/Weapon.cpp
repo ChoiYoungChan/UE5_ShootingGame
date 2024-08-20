@@ -1,5 +1,8 @@
 #include "Weapon.h"
 
+#include "Engine/Classes/Components/SkeletalMeshComponent.h"
+
+
 AWeapon::AWeapon()
 {
 	PrimaryActorTick.bCanEverTick = false;

@@ -1,4 +1,6 @@
 #include "PlayerCharacter.h"
+#include "Weapon.h"
+
 #include "Engine/Classes/Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
 #include <Runtime/Engine/Public/Net/UnrealNetwork.h>
@@ -48,9 +50,9 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAxis("LookRight", this, &APlayerCharacter::LookRight);
 }
 
-void APlayerCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& outLifetimeProps) const
+void APlayerCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
-	Super::GetLifetimeReplicatedProps(outLifetimeProps);
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME_CONDITION(APlayerCharacter, Weapons, COND_None);
 }
@@ -61,7 +63,8 @@ void APlayerCharacter::OnRepCurrentWeapon(const AWeapon* oldWeapon)
 	{
 		if (!CurrentWeapon->CurrentOwner)
 		{
-			CurrentWeapon->AttachToComponent();
+			CurrentWeapon->SetActorTransform(GetMesh()->GetSocketTransform(FName("CurrentWeapon")), false, nullptr, ETeleportType::TeleportPhysics);
+			CurrentWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepWorldTransform, FName("Weapon_R"));
 		}
 	}
 

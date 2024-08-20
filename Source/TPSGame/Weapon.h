@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+
 #include "Weapon.generated.h"
 
 USTRUCT(BlueprintType)
@@ -35,10 +36,10 @@ public:
 	class USceneComponent* Root;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-	class USKeletalMeshComponent* Mesh;
+	class USkeletalMeshComponent* Mesh;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "State")
-	class APlayerCharacter CurrentOwner;
+	class APlayerCharacter* CurrentOwner;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Configurations")
 	FIKProperties IKProperties;

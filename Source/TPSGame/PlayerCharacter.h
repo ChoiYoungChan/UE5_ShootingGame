@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+
 #include "PlayerCharacter.generated.h"
 
 UCLASS()
@@ -16,7 +17,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& outLifetimeProps) const override;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 public:	
 	// Called to bind functionality to input
@@ -33,7 +34,7 @@ protected:
 
 public:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Replicated, Category = "State")
-	TArray<class AWeapon> Weapons;
+	TArray<class AWeapon*> Weapons;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, ReplicatedUsing = OnRepCurrentWeapon, Category = "State")
 	class AWeapon* CurrentWeapon;
@@ -44,7 +45,7 @@ public:
 
 protected:
 	UFUNCTION()
-		virtual void OnRepCurrentWeapon(const class AWeapon* oldWeapon);
+	virtual void OnRepCurrentWeapon(const class AWeapon* oldWeapon);
 
 
 
