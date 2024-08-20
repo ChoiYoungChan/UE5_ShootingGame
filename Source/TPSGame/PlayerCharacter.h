@@ -42,16 +42,21 @@ public:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Replicated, Category = "State")
 	int32 CurrentIndex = 0;
 
+	UFUNCTION(BlueprintCallable, Category = "Character")
+	virtual void EquipWeapon(const int32 Index);
 
 protected:
 	UFUNCTION()
 	virtual void OnRepCurrentWeapon(const class AWeapon* oldWeapon);
 
-
-
-
+	UFUNCTION(Server, Reliable)
+	void ServerSetCurrentWeapon(class AWeapon* NewWeapon);
+	virtual void ServerSetCurrentWeaponImplementation(class AWeapon* Weapon);
 
 protected:
+	virtual void NextWeapon();
+	virtual void LastWeapon();
+
 	void MoveForward(const float value);
 	void MoveRight(const float value);
 	void LookUp(const float value);

@@ -44,6 +44,9 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	PlayerInputComponent->BindAction(FName("NextWeapon"), IE_Pressed, this, &APlayerCharacter::NextWeapon);
+	PlayerInputComponent->BindAction(FName("LastWeapon"), IE_Pressed, this, &APlayerCharacter::LastWeapon);
+
 	PlayerInputComponent->BindAxis("MoveForward", this, &APlayerCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &APlayerCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("LookUp", this, &APlayerCharacter::LookUp);
@@ -55,23 +58,70 @@ void APlayerCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME_CONDITION(APlayerCharacter, Weapons, COND_None);
+	DOREPLIFETIME_CONDITION(APlayerCharacter, CurrentWeapon, COND_None);
 }
 
-void APlayerCharacter::OnRepCurrentWeapon(const AWeapon* oldWeapon)
+void APlayerCharacter::OnRepCurrentWeapon(const AWeapon* OldWeapon)
 {
 	if (CurrentWeapon)
 	{
 		if (!CurrentWeapon->CurrentOwner)
 		{
+			const FTransform& PlacementTransform = CurrentWeapon->PlacementTransform * GetMesh()->GetSocketTransform(FName("hand_r"));
 			CurrentWeapon->SetActorTransform(GetMesh()->GetSocketTransform(FName("CurrentWeapon")), false, nullptr, ETeleportType::TeleportPhysics);
-			CurrentWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepWorldTransform, FName("Weapon_R"));
+			CurrentWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepWorldTransform, FName("hand_r"));
+
+			CurrentWeapon->CurrentOwner = this;
 		}
+		CurrentWeapon->Mesh->SetVisibility(true);
 	}
 
-	if (oldWeapon)
+	if (OldWeapon)
 	{
-
+		OldWeapon->Mesh->SetVisibility(true);
 	}
+}
+
+void APlayerCharacter::EquipWeapon(const int32 Index)
+{
+	if (!Weapons.IsValidIndex(Index) || CurrentWeapon == Weapons[Index]) return;
+
+	if (IsLocallyControlled())
+	{
+		CurrentIndex = Index;
+
+		const AWeapon* oldWeapon = CurrentWeapon;
+		CurrentWeapon = Weapons[Index];
+		OnRepCurrentWeapon(oldWeapon);
+	}
+	else if (!HasAuthority())
+	{
+		ServerSetCurrentWeapon(Weapons[Index]);
+	}
+}
+
+void APlayerCharacter::ServerSetCurrentWeapon(class AWeapon* NewWeapon)
+{
+	const AWeapon* oldWeapon = CurrentWeapon;
+	CurrentWeapon = NewWeapon;
+	OnRepCurrentWeapon(oldWeapon);
+}
+
+void APlayerCharacter::ServerSetCurrentWeaponImplementation(class AWeapon* Weapon)
+{
+
+}
+
+void APlayerCharacter::NextWeapon()
+{
+	const int32 Index = Weapons.IsValidIndex(CurrentIndex + 1) ? (CurrentIndex + 1) : 0;
+	EquipWeapon(Index);
+}
+
+void APlayerCharacter::LastWeapon()
+{
+	const int32 Index = Weapons.IsValidIndex(CurrentIndex - 1) ? (CurrentIndex - 1) : (Weapons.Num() - 1);
+	EquipWeapon(Index);
 }
 
 void APlayerCharacter::MoveForward(const float value)
