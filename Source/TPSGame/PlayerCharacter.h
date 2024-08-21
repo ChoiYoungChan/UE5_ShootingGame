@@ -5,6 +5,9 @@
 
 #include "PlayerCharacter.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FCurrentWeaponChangedDelegate, class AWeapon*, CurrentWeapon, const class AWeapon*, OldWeapon);
+
+
 UCLASS()
 class TPSGAME_API APlayerCharacter : public ACharacter
 {
@@ -38,6 +41,9 @@ public:
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, ReplicatedUsing = OnRepCurrentWeapon, Category = "State")
 	class AWeapon* CurrentWeapon;
+
+	UPROPERTY(BlueprintAssignable, Category = "Delegates")
+	FCurrentWeaponChangedDelegate CurrentWeaponChangedDelegate;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Replicated, Category = "State")
 	int32 CurrentIndex = 0;

@@ -80,6 +80,8 @@ void APlayerCharacter::OnRepCurrentWeapon(const AWeapon* OldWeapon)
 	{
 		OldWeapon->Mesh->SetVisibility(true);
 	}
+
+	CurrentWeaponChangedDelegate.Broadcast(CurrentWeapon, OldWeapon);
 }
 
 void APlayerCharacter::EquipWeapon(const int32 Index)
