@@ -68,7 +68,7 @@ void APlayerCharacter::OnRepCurrentWeapon(const AWeapon* OldWeapon)
 		if (!CurrentWeapon->CurrentOwner)
 		{
 			const FTransform& PlacementTransform = CurrentWeapon->PlacementTransform * GetMesh()->GetSocketTransform(FName("hand_r"));
-			CurrentWeapon->SetActorTransform(GetMesh()->GetSocketTransform(FName("CurrentWeapon")), false, nullptr, ETeleportType::TeleportPhysics);
+			CurrentWeapon->SetActorTransform(PlacementTransform, false, nullptr, ETeleportType::TeleportPhysics);
 			CurrentWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepWorldTransform, FName("hand_r"));
 
 			CurrentWeapon->CurrentOwner = this;
@@ -96,20 +96,15 @@ void APlayerCharacter::EquipWeapon(const int32 Index)
 	}
 	else if (!HasAuthority())
 	{
-		ServerSetCurrentWeapon(Weapons[Index]);
+		Server_SetCurrentWeapon(Weapons[Index]);
 	}
 }
 
-void APlayerCharacter::ServerSetCurrentWeapon(class AWeapon* NewWeapon)
+void APlayerCharacter::Server_SetCurrentWeapon_Implementation(class AWeapon* NewWeapon)
 {
 	const AWeapon* oldWeapon = CurrentWeapon;
 	CurrentWeapon = NewWeapon;
 	OnRepCurrentWeapon(oldWeapon);
-}
-
-void APlayerCharacter::ServerSetCurrentWeaponImplementation(class AWeapon* Weapon)
-{
-
 }
 
 void APlayerCharacter::NextWeapon()
@@ -131,7 +126,7 @@ void APlayerCharacter::MoveForward(const float value)
 
 void APlayerCharacter::MoveRight(const float value)
 {
-	AddMovementInput(GetActorForwardVector() * value);
+	AddMovementInput(GetActorRightVector() * value);
 }
 
 void APlayerCharacter::LookUp(const float value)

@@ -50,8 +50,8 @@ protected:
 	virtual void OnRepCurrentWeapon(const class AWeapon* oldWeapon);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSetCurrentWeapon(class AWeapon* NewWeapon);
-	virtual void ServerSetCurrentWeaponImplementation(class AWeapon* Weapon);
+	void Server_SetCurrentWeapon(class AWeapon* Weapon);
+	virtual void Server_SetCurrentWeapon_Implementation(class AWeapon* NewWeapon);
 
 protected:
 	virtual void NextWeapon();
